@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TravelPortalBlazorCRUD.Components;
-using TravelPortalBlazorCRUD.Data;
+using TravelPortalBlazor.Core.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +10,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddDbContext<DataContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectConnection")));
 
 var app = builder.Build();
 

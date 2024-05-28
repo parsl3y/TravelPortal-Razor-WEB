@@ -1,4 +1,4 @@
-﻿namespace TravelPortalBlazorCRUD.Entity
+﻿namespace TravelPortalBlazor.Core.Entity
 
 {
     public class City

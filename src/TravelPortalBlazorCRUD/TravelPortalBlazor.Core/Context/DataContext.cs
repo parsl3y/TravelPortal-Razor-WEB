@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TravelPortalBlazorCRUD.Entity;
+using TravelPortalBlazor.Core.Entity;
 
-namespace TravelPortalBlazorCRUD.Data
+namespace TravelPortalBlazor.Core.Context
 {
-    public class DataContext: DbContext
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options)
-            : base(options) 
-        { 
+            : base(options)
+        {
 
         }
 
