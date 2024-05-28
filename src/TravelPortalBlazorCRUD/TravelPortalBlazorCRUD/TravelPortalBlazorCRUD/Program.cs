@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TravelPortalBlazorCRUD.Components;
 using TravelPortalBlazor.Core.Context;
-
+using TravelPortalBlazor.Service.Services.CityService;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,9 +9,17 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddControllers();
+
+builder.Services.AddScoped(http => new HttpClient
+{
+    BaseAddress = new Uri(builder.Configuration.GetSection("BaseUri").Value!),
+});
+
 builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectConnection")));
 
+builder.Services.AddScoped<ICityService, CityService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +35,8 @@ else
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.UseStaticFiles();
 app.UseAntiforgery();

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\TravelPortalBlazor.Core\TravelPortalBlazor.Core.csproj" />
+    <ProjectReference Include="..\..\TravelPortalBlazor.Service\TravelPortalBlazor.Service.csproj" />
     <ProjectReference Include="..\TravelPortalBlazorCRUD.Client\TravelPortalBlazorCRUD.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />

@@ -1,0 +1,58 @@
+﻿@page "/edit-city"
+@page "/edit-city/{id:int}"
+
+@inject ICityService CityService
+@rendermode InteractiveWebAssembly
+
+@if (Id == null)
+{
+    <h3>Add New City</h3>
+}
+else
+{
+    <h3>Edit @city.Name</h3>
+}
+<EditForm Model="city" OnSubmit="HandleSubmit">
+    <label>Name</label>
+    <InputText @bind-Value="city.Name" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+    @if (Id != null)
+    {
+        <button @onclick="DeleteCity" type="button" class="btn btn-primary">Delete</button>
+    }
+</EditForm>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    City city { get; set; } = new City { Name = string.Empty };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != null)
+        {
+            city = await CityService.GetCityById((int)Id);
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id == null)
+        {
+            await CityService.AddCity(city);
+        }
+        else
+        {
+            await CityService.EditCity((int)Id, city);
+        }
+    }
+
+    async Task DeleteCity()
+    {
+        if (Id != null)
+        {
+            await CityService.DeleteCity((int)Id);
+        }
+    }
+}

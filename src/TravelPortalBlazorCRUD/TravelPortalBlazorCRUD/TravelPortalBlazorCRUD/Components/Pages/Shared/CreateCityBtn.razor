@@ -1,0 +1,11 @@
+﻿@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+
+<button @onclick="AddCity" class="btn btn-primary"> Add New City </button>
+@code {
+    void AddCity()
+    {
+        NavigationManager.NavigateTo("/edit-city");
+    }
+}
