@@ -1,39 +1,45 @@
 ﻿@page "/cities"
-@using TravelPortalBlazorCRUD.Components.Pages.Cities
+@using TravelPortalBlazorCRUD.Components.Pages
 @inject ICityService CityService
 @attribute [StreamRendering(true)]
-
- 
-
-<h3>CityList</h3>
-
-@if(cities == null)
+<link href="./app.css" rel="stylesheet" />
+<h3>City List</h3>
+<CreateCityBtn />
+@if (cities == null)
 {
     <span>Loading...</span>
 }
 else if (cities.Count == 0)
 {
-    <span>No City found .</span>
+    <span>No City found.</span>
 }
-
 else
 {
-    @foreach (var city in cities)
-    {
-        <li> @city.Name <EditCityBtn Id="city.Id" /></li>
-    }
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>City Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var city in cities)
+            {
+                <tr>
+                    <td>@city.Name</td>
+                    <td><EditCityBtn Id="city.Id" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+  
 }
-
-<CreateCityBtn />
-
 
 @code {
     List<City>? cities = null;
 
     protected override async Task OnInitializedAsync()
     {
-        cities = await CityService.GetAllCity(); 
+        cities = await CityService.GetAllCity();
     }
-
- 
 }

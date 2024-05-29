@@ -3,9 +3,9 @@
 namespace TravelPortalBlazor.Core.Entity
 
 {
-    public class City : IEntity<Guid>
+    public class City 
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public int Id { get; set; } 
         public required string Name { get; set; }
     }
 }

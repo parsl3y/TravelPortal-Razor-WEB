@@ -19,7 +19,7 @@ namespace TravelPortalBlazor.Core.Entity
         public double rating { get; set; }
 
         [ForeignKey(nameof(City))]
-        public Guid CityId { get; set; }
+        public int CityId { get; set; }
         public City? City { get; set; }
     }
 }

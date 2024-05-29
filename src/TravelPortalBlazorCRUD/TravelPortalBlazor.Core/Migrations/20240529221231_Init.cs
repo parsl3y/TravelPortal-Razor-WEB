@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelPortalBlazor.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,8 @@ namespace TravelPortalBlazor.Core.Migrations
                 name: "City",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -46,7 +47,7 @@ namespace TravelPortalBlazor.Core.Migrations
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     rating = table.Column<double>(type: "float", nullable: false),
-                    CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,35 +60,10 @@ namespace TravelPortalBlazor.Core.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Routes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartCityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EndCityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Routes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Routes_City_EndCityId",
-                        column: x => x.EndCityId,
-                        principalTable: "City",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Hotel_CityId",
                 table: "Hotel",
                 column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Routes_EndCityId",
-                table: "Routes",
-                column: "EndCityId");
         }
 
         /// <inheritdoc />
@@ -98,9 +74,6 @@ namespace TravelPortalBlazor.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "PlaceFamous");
-
-            migrationBuilder.DropTable(
-                name: "Routes");
 
             migrationBuilder.DropTable(
                 name: "City");

@@ -12,8 +12,8 @@ using TravelPortalBlazor.Core.Context;
 namespace TravelPortalBlazor.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240529191658_init")]
-    partial class init
+    [Migration("20240529221231_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,11 @@ namespace TravelPortalBlazor.Core.Migrations
 
             modelBuilder.Entity("TravelPortalBlazor.Core.Entity.City", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -46,8 +48,8 @@ namespace TravelPortalBlazor.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CityId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
@@ -91,29 +93,6 @@ namespace TravelPortalBlazor.Core.Migrations
                     b.ToTable("PlaceFamous");
                 });
 
-            modelBuilder.Entity("TravelPortalBlazor.Core.Entity.Routes", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EndCityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StartCityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EndCityId");
-
-                    b.ToTable("Routes");
-                });
-
             modelBuilder.Entity("TravelPortalBlazor.Core.Entity.Hotel", b =>
                 {
                     b.HasOne("TravelPortalBlazor.Core.Entity.City", "City")
@@ -123,17 +102,6 @@ namespace TravelPortalBlazor.Core.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
-                });
-
-            modelBuilder.Entity("TravelPortalBlazor.Core.Entity.Routes", b =>
-                {
-                    b.HasOne("TravelPortalBlazor.Core.Entity.City", "EndCity")
-                        .WithMany()
-                        .HasForeignKey("EndCityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EndCity");
                 });
 #pragma warning restore 612, 618
         }
