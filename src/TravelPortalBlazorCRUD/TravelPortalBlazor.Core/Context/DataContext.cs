@@ -12,5 +12,9 @@ namespace TravelPortalBlazor.Core.Context
         }
 
         public DbSet<City> City { get; set; }
+        public DbSet<Hotel> Hotel { get; set; }
+        public DbSet<PlaceFamous> PlaceFamous { get; set; }
+        public DbSet<Routes> Routes { get; set; }
+
     }
 }
