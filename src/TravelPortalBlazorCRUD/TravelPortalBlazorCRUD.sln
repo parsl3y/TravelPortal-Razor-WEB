@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPortalBlazorCRUD.Clie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPortalBlazor.Core", "TravelPortalBlazor.Core\TravelPortalBlazor.Core.csproj", "{DC72937F-3FCD-424A-8E29-262B68CF8F03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelPortalBlazor.Service", "TravelPortalBlazor.Service\TravelPortalBlazor.Service.csproj", "{4070F5A7-893F-40AC-B996-03A252730DB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPortalBlazor.Service", "TravelPortalBlazor.Service\TravelPortalBlazor.Service.csproj", "{4070F5A7-893F-40AC-B996-03A252730DB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

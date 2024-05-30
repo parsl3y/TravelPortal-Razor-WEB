@@ -25,7 +25,7 @@ else
 
 @code {
     [Parameter]
-    public int? Id { get; set; }
+    public Guid? Id { get; set; }
 
     City city { get; set; } = new City { Name = string.Empty };
 
@@ -33,7 +33,7 @@ else
     {
         if (Id != null)
         {
-            city = await CityService.GetCityById((int)Id);
+            city = await CityService.GetCityById((Guid)Id);
         }
     }
 
@@ -46,7 +46,7 @@ else
         }
         else
         {
-            await CityService.EditCity((int)Id, city);
+            await CityService.EditCity((Guid)Id, city);
             Navigation.NavigateTo("cities");
         }
     }
@@ -55,7 +55,7 @@ else
     {
         if (Id != null)
         {
-            await CityService.DeleteCity((int)Id);
+            await CityService.DeleteCity((Guid)Id);
             Navigation.NavigateTo("cities");
         }
     }

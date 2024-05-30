@@ -12,8 +12,8 @@ using TravelPortalBlazor.Core.Context;
 namespace TravelPortalBlazor.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240529221231_Init")]
-    partial class Init
+    [Migration("20240530000543_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace TravelPortalBlazor.Core.Migrations
 
             modelBuilder.Entity("TravelPortalBlazor.Core.Entity.City", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -48,8 +46,8 @@ namespace TravelPortalBlazor.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");

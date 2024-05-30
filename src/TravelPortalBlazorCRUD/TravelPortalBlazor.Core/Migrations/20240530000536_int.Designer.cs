@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelPortalBlazor.Core.Context;
 
@@ -11,9 +12,11 @@ using TravelPortalBlazor.Core.Context;
 namespace TravelPortalBlazor.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240530000536_int")]
+    partial class @int
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,11 +46,11 @@ namespace TravelPortalBlazor.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Photo")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -57,6 +60,8 @@ namespace TravelPortalBlazor.Core.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("Hotel");
                 });
@@ -84,6 +89,17 @@ namespace TravelPortalBlazor.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PlaceFamous");
+                });
+
+            modelBuilder.Entity("TravelPortalBlazor.Core.Entity.Hotel", b =>
+                {
+                    b.HasOne("TravelPortalBlazor.Core.Entity.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 #pragma warning restore 612, 618
         }

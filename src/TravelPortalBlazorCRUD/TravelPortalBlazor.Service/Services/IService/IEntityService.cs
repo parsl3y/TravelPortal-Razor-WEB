@@ -7,10 +7,9 @@ namespace TravelPortalBlazor.Service.Services.IService
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(TKey id);
-        Task CreateAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TKey id);
-        Task SaveAsync();
+        Task<TEntity> CreateAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TKey id, TEntity entity);
+        Task<bool> DeleteAsync(TKey id);
     }
 
 }

@@ -1,0 +1,12 @@
+﻿@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+
+<button @onclick="AddHotel" class="btn btn-primary"> Add New Hotel </button>
+@code {
+    void AddHotel()
+    {
+        NavigationManager.NavigateTo("/edit-hotel");
+
+    }
+}
