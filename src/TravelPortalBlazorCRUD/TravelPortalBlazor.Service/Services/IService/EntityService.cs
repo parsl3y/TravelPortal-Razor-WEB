@@ -17,26 +17,28 @@ namespace TravelPortalBlazor.Service.Services.IService
         }
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync() => await _ctx.Set<TEntity>().ToListAsync();
 
-        public virtual async Task CreateAsync(TEntity entity)
+        public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
             await _ctx.Set<TEntity>().AddAsync(entity);
-            await SaveAsync();
+            await _ctx.SaveChangesAsync();
+            return entity;
         }
-        public virtual async Task DeleteAsync(TKey id)
+        public virtual async Task<bool> DeleteAsync(TKey id)
         {
             _ctx.Set<TEntity>().Remove(await _ctx.Set<TEntity>().FindAsync(id));
-            await SaveAsync();
+            await _ctx.SaveChangesAsync();
+            return true;
         }
-        public virtual async Task UpdateAsync(TEntity entity)
+        public virtual async Task<TEntity> UpdateAsync(TKey id, TEntity entity)
         {
             _ctx.Set<TEntity>().Update(entity);
-            await SaveAsync();
+            await _ctx.SaveChangesAsync();
+            return entity;
         }
         public virtual async Task<TEntity> GetByIdAsync(TKey id)
         {
             return await _ctx.Set<TEntity>().FindAsync(id);
         }
-        public async Task SaveAsync() => await _ctx.SaveChangesAsync();
     }
 
 }

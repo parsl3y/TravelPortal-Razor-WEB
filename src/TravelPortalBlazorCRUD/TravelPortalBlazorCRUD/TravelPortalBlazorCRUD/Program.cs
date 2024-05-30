@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using TravelPortalBlazorCRUD.Components;
 using TravelPortalBlazor.Core.Context;
 using TravelPortalBlazor.Service.Services.CityService;
+using TravelPortalBlazor.Service.Services.HotelService;
+using TravelPortalBlazor.Service.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +22,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectConnection")));
 
 builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IHotelService, HotelService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

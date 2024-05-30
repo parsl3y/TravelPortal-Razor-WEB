@@ -5,8 +5,8 @@ namespace TravelPortalBlazor.Service.Services.CityService
     {
         Task<List<City>> GetAllCity();
         Task<City> AddCity(City city);
-        Task<City> GetCityById(int id);
-        Task<City> EditCity (int id, City city);
-        Task<bool> DeleteCity(int id);
+        Task<City> GetCityById(Guid id);
+        Task<City> EditCity (Guid id, City city);
+        Task<bool> DeleteCity(Guid id);
     }
 }

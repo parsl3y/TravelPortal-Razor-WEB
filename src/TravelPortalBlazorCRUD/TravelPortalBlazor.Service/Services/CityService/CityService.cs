@@ -21,7 +21,7 @@ namespace TravelPortalBlazor.Service.Services.CityService
             return city;
         }
 
-        public async Task<bool> DeleteCity(int id)
+        public async Task<bool> DeleteCity(Guid id)
         {
            var dbCity = await _ctx.City.FindAsync(id);
             if(dbCity != null)
@@ -33,7 +33,7 @@ namespace TravelPortalBlazor.Service.Services.CityService
             return false;
         }
 
-        public async Task<City> EditCity(int id, City city)
+        public async Task<City> EditCity(Guid id, City city)
         {
             var dbCity = await _ctx.City.FindAsync(id);
             if(dbCity != null)
@@ -53,7 +53,7 @@ namespace TravelPortalBlazor.Service.Services.CityService
             return cities;
         }
 
-        public async Task<City> GetCityById(int id)
+        public async Task<City> GetCityById(Guid id)
         {
             return await _ctx.City.FindAsync(id);
         }

@@ -19,13 +19,13 @@ namespace TravelPortalBlazor.Service.Services
             return await result.Content.ReadFromJsonAsync<City>();
         }
 
-        public async Task <bool> DeleteCity(int id)
+        public async Task <bool> DeleteCity(Guid id)
         {
             var result = await _httpClient.DeleteAsync($"/api/city/{id}");
             return await result.Content.ReadFromJsonAsync<bool>();
         }
 
-        public async Task <City> EditCity(int id, City city)
+        public async Task <City> EditCity(Guid id, City city)
         {
             var result = await _httpClient.PutAsJsonAsync($"/api/city/{id}", city);
             return await result.Content.ReadFromJsonAsync<City>();
@@ -36,7 +36,7 @@ namespace TravelPortalBlazor.Service.Services
             throw new NotImplementedException();
         }
 
-        public async Task<City> GetCityById(int id)
+        public async Task<City> GetCityById(Guid id)
         {
             var result = await _httpClient
                 .GetFromJsonAsync<City>($"/api/city/{id}");

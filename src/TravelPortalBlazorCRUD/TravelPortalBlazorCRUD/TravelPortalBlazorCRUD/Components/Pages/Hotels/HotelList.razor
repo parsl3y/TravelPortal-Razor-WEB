@@ -1,0 +1,68 @@
+﻿@page "/hotels"
+@using TravelPortalBlazorCRUD.Components.Pages
+@inject IHotelService HotelService
+@inject ICityService CityService
+
+@attribute [StreamRendering(true)]
+<link href="./app.css" rel="stylesheet" />
+<h3>Hotel List</h3>
+<CreateHotelBtn />
+@if (hotels == null)
+{
+    <span>Loading...</span>
+}
+else if (hotels.Count() == 0)
+{
+    <span>No Hotel found.</span>
+}
+else
+{
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Hotel Name</th>
+                <th>Hotel photo</th>
+                <th>Rating</th>
+                <th>City</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hotel in hotels)
+            {
+                <tr>
+                    <td>@hotel.name</td>
+                    <td>
+                    @if (hotel.Photo != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(hotel.Photo)" alt="Hotel Photo" style="max-width: 100px; max-height: 100px;" />
+                    }
+                    else
+                    {
+                        <span>No Photo</span>
+                    }
+                    </td>
+                    <td>@hotel.rating</td>
+                    <td><EditHotelBtn Id="hotel.Id" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+  
+}
+
+@code {
+    IEnumerable<Hotel>? hotels = null;
+
+    public async Task<string> GetStringAsync(Guid id)
+    {
+        var name = await CityService.GetCityById(id);
+        return name.Name;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        hotels = await HotelService.GetAllAsync();
+    }
+}

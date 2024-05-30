@@ -25,14 +25,14 @@ namespace TravelPortalBlazorCRUD.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<City>> EditCity(int id, City city)
+        public async Task<ActionResult<City>> EditCity(Guid id, City city)
         {
             var updateCity =  await _cityService.EditCity(id, city);
             return Ok(updateCity);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<City>> DeleteCity(int id)
+        public async Task<ActionResult<City>> DeleteCity(Guid id)
         {
             var result = await _cityService.DeleteCity(id);
             return Ok(result);

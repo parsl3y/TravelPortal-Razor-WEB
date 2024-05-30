@@ -5,7 +5,7 @@
 <button @onclick="EditCity" class="btn btn-primary"> Edit City </button>
 @code {
     [Parameter]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     void EditCity()
     {

@@ -1,0 +1,14 @@
+﻿@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+
+<button @onclick="EditHotel" class="btn btn-primary"> Edit Hotel </button>
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    void EditHotel()
+    {
+        NavigationManager.NavigateTo($"/edit-hotel/{Id}");
+    }
+}

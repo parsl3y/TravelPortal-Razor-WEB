@@ -1,0 +1,87 @@
+﻿@page "/edit-hotel"
+@page "/edit-hotel/{id:int}"
+
+@inject NavigationManager Navigation
+@inject ICityService CityService
+@inject IHotelService HotelService
+
+@rendermode InteractiveAuto
+
+@if (Id == null)
+{
+    <h3>Add New Hotel</h3>
+}
+else
+{
+    <h3>Edit @hotel.name</h3>
+}
+<EditForm Model="hotel" OnSubmit="HandleSubmit">
+    <label>Name</label>
+    <InputText @bind-Value="hotel.name" class="form-control" />
+    <label>Rating</label>
+    <InputNumber @bind-Value="hotel.rating" class="form-control" />
+    <label>Photo</label>
+    <InputFile OnChange="HandleFileSelected" class="form-control" />
+    <label>City</label>
+   @*  <InputSelect @bind-Value="hotel.CityId" class="form-control">
+        @foreach (var city in cities)
+        {
+            <option value="@city.Id">@city.Name</option>
+        }
+    </InputSelect> *@
+    <button type="submit" class="btn btn-primary">Submit</button>
+    @if (Id != null)
+    {
+        <button @onclick="DeleteCity" type="button" class="btn btn-primary">Delete</button>
+    }
+</EditForm>
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    Hotel hotel { get; set; } = new Hotel { name = string.Empty, rating = 0, Photo = null, ImagePath = null};
+    private List<City> cities = new List<City>();
+    protected override async Task OnParametersSetAsync()
+    {
+        cities = await CityService.GetAllCity();
+        if (Id != null)
+        {
+            hotel = await HotelService.GetByIdAsync((Guid)Id);
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id == null)
+        {
+            await HotelService.CreateAsync(hotel);
+            Navigation.NavigateTo("hotels");
+        }
+        else
+        {
+            await HotelService.UpdateAsync((Guid)Id, hotel);
+            Navigation.NavigateTo("hotels");
+        }
+    }
+
+    async Task DeleteCity()
+    {
+        if (Id != null)
+        {
+            await HotelService.DeleteAsync((Guid)Id);
+            Navigation.NavigateTo("hotels");
+        }
+    }
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            using var stream = file.OpenReadStream();
+            using var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            hotel.Photo = ms.ToArray();
+        }
+    }
+}
