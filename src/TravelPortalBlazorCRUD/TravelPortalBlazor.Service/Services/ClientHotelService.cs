@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using TravelPortalBlazor.Service.Services.HotelService;
 
 namespace TravelPortalBlazor.Service.Services
 {
-    public class ClientHotelService: IHotelService
+    public class ClientHotelService : IHotelService
     {
         private readonly HttpClient _httpClient;
 
@@ -38,14 +39,21 @@ namespace TravelPortalBlazor.Service.Services
 
         public async Task<IEnumerable<Hotel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync("/api/hotel");
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<IEnumerable<Hotel>>();
         }
 
         public async Task<Hotel> GetByIdAsync(Guid id)
         {
-            var result = await _httpClient
-                .GetFromJsonAsync<Hotel>($"/api/hotel/{id}");
+            var result = await _httpClient.GetFromJsonAsync<Hotel>($"/api/hotel/{id}");
             return result;
+        }
+
+        public Task<string> GetCityNameById(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

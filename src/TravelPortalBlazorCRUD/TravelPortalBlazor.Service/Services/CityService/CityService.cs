@@ -57,5 +57,13 @@ namespace TravelPortalBlazor.Service.Services.CityService
         {
             return await _ctx.City.FindAsync(id);
         }
+
+        public async Task<string> GetCityNameById(Guid id)
+        {
+            var city = await _ctx.City.FindAsync(id);
+            return city?.Name;
+        }
+
+
     }
 }

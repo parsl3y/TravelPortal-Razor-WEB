@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelPortalBlazor.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class @int : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,7 +44,7 @@ namespace TravelPortalBlazor.Core.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     rating = table.Column<double>(type: "float", nullable: false),
                     CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },

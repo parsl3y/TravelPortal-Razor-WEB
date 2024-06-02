@@ -43,8 +43,8 @@ namespace TravelPortalBlazor.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
@@ -57,6 +57,8 @@ namespace TravelPortalBlazor.Core.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("Hotel");
                 });
@@ -84,6 +86,17 @@ namespace TravelPortalBlazor.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PlaceFamous");
+                });
+
+            modelBuilder.Entity("TravelPortalBlazor.Core.Entity.Hotel", b =>
+                {
+                    b.HasOne("TravelPortalBlazor.Core.Entity.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 #pragma warning restore 612, 618
         }

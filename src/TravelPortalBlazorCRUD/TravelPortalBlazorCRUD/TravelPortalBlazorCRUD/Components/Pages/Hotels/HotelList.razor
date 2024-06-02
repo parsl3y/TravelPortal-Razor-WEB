@@ -1,11 +1,12 @@
-﻿@page "/hotels"
+﻿@attribute [StreamRendering(true)]
+@page "/hotels"
 @using TravelPortalBlazorCRUD.Components.Pages
 @inject IHotelService HotelService
 @inject ICityService CityService
 
-@attribute [StreamRendering(true)]
 <link href="./app.css" rel="stylesheet" />
-<h3>Hotel List</h3>
+
+<h3 class="text-center">Hotel List</h3>
 <CreateHotelBtn />
 @if (hotels == null)
 {
@@ -17,49 +18,57 @@ else if (hotels.Count() == 0)
 }
 else
 {
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <th>Hotel Name</th>
-                <th>Hotel photo</th>
-                <th>Rating</th>
-                <th>City</th>
-                <th>Actions</th>
+    <div class="row">
+        @foreach (var hotel in hotels)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@hotel.name</h5>
+                        <div class="card-text">
+                            @if (hotel.Photo != null)
+                            {
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(hotel.Photo)" alt="Hotel Photo" class="card-img-top" />
+                            }
+                            else
+                            {
+                                <span>No Photo</span>
+                            }
+                        </div>
+                        <div class="card-text">
+                            @if (hotel.rating != null)
+                            {
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    @if (i <= hotel.rating)
+                                    {
+                                        <span class="star">&#9733;</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="star">&#9734;</span>
+                                    }
+                                }
+                            }
+                        </div>
+                        <div>
+                            <div>@await CityService.GetCityNameById(hotel.CityId)</div>
+                        </div>
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var hotel in hotels)
-            {
-                <tr>
-                    <td>@hotel.name</td>
-                    <td>
-                    @if (hotel.Photo != null)
-                    {
-                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(hotel.Photo)" alt="Hotel Photo" style="max-width: 100px; max-height: 100px;" />
-                    }
-                    else
-                    {
-                        <span>No Photo</span>
-                    }
-                    </td>
-                    <td>@hotel.rating</td>
-                    <td><EditHotelBtn Id="hotel.Id" /></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-  
+
+
+
+                        <EditHotelBtn Id="hotel.Id" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }
 
 @code {
     IEnumerable<Hotel>? hotels = null;
 
-    public async Task<string> GetStringAsync(Guid id)
-    {
-        var name = await CityService.GetCityById(id);
-        return name.Name;
-    }
 
     protected override async Task OnInitializedAsync()
     {

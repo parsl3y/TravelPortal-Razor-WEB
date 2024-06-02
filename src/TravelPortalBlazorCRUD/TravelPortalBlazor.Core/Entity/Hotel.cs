@@ -12,9 +12,16 @@ namespace TravelPortalBlazor.Core.Entity
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string name { get; set; }
-        public string? ImagePath { get; set; }
+
         public byte[]? Photo { get; set; }
+
         public double rating { get; set; }
+
+        [ForeignKey(nameof(CityId))]
+
+        public Guid CityId { get; set; }
+
+        public City? City { get; set; }
 
     }
 }

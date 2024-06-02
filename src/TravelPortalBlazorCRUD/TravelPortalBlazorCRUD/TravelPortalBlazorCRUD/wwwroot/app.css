@@ -64,7 +64,7 @@ h1:focus {
     }
 
     .styled-table thead tr {
-        background-color: #009879;
+        background-color: #485EFF;
         color: #ffffff;
         text-align: left;
     }
@@ -78,9 +78,34 @@ h1:focus {
         }
 
         .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #009879;
+            border-bottom: 2px solid #485EFF;
         }
 
         .styled-table tbody tr:hover {
-            background-color: #f1f1f1;
+            background-color: #B2BBFF;
         }
+
+.card {
+    text-align: center;
+}
+
+.card-img-top {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin: auto;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btn-margin {
+    margin-bottom: 20px;
+}
+
+.star {
+    font-size: 24px;
+}

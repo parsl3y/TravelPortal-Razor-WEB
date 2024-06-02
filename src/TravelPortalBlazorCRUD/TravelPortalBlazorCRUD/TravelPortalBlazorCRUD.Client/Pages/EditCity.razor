@@ -1,5 +1,5 @@
 ﻿@page "/edit-city"
-@page "/edit-city/{id:int}"
+@page "/edit-city/{id:guid}"
 
 @inject NavigationManager Navigation
 @inject ICityService CityService
@@ -15,8 +15,8 @@ else
 }
 <EditForm Model="city" OnSubmit="HandleSubmit">
     <label>Name</label>
-    <InputText @bind-Value="city.Name" />
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <InputText @bind-Value="city.Name" required />
+    <button type="submit" class="btn btn-primary" >Submit</button>
     @if (Id != null)
     {
         <button @onclick="DeleteCity" type="button" class="btn btn-primary">Delete</button>

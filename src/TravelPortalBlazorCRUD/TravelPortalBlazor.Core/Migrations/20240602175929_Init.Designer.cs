@@ -12,8 +12,8 @@ using TravelPortalBlazor.Core.Context;
 namespace TravelPortalBlazor.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240530000543_init")]
-    partial class init
+    [Migration("20240602175929_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,8 +49,8 @@ namespace TravelPortalBlazor.Core.Migrations
                     b.Property<Guid>("CityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("name")
                         .IsRequired()

@@ -3,11 +3,11 @@
 @inject ICityService CityService
 @attribute [StreamRendering(true)]
 <link href="./app.css" rel="stylesheet" />
-<h3>City List</h3>
+<h3 class="text-center">City List</h3>
 <CreateCityBtn />
 @if (cities == null)
 {
-    <span>Loading...</span>
+    
 }
 else if (cities.Count == 0)
 {
