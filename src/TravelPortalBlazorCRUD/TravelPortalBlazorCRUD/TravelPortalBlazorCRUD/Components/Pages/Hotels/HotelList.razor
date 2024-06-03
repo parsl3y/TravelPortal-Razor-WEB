@@ -52,8 +52,9 @@ else
                             }
                         </div>
                         <div>
-                            <div>@await CityService.GetCityNameById(hotel.CityId)</div>
+                            <div>@cityNames.GetValueOrDefault(hotel.CityId, "Unknown City")</div>
                         </div>
+
 
 
 
@@ -68,10 +69,12 @@ else
 
 @code {
     IEnumerable<Hotel>? hotels = null;
-
+    Dictionary<Guid, string> cityNames = new Dictionary<Guid, string>();
 
     protected override async Task OnInitializedAsync()
     {
         hotels = await HotelService.GetAllAsync();
+        var cities = await CityService.GetAllCity();
+        cityNames = cities.ToDictionary(city => city.Id, city => city.Name);
     }
 }
