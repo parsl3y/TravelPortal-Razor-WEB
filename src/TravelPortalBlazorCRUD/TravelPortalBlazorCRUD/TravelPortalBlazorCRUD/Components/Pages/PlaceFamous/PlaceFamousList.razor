@@ -1,0 +1,67 @@
+﻿@attribute [StreamRendering(true)]
+@page "/placefamous"
+@using TravelPortalBlazorCRUD.Components.Pages
+@inject IPlaceFamousService PlaceService
+@inject ICityService CityService
+
+<link href="./app.css" rel="stylesheet" />
+
+<h3 class="text-center">Place List</h3>
+<CreatePlaceBtn />
+@if (places == null)
+{
+    <span>Loading...</span>
+}
+else if (places.Count() == 0)
+{
+    <span>No places found.</span>
+}
+else
+{
+    <div class="row">
+        @foreach (var place in places)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@place.Name</h5>
+                        <div class="card-text">
+                            @if (place.Photo != null)
+                            {
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(place.Photo)" alt="Place Photo" class="card-img-top" />
+                            }
+                            else
+                            {
+                                <span>No Photo</span>
+                            }
+                        </div>
+                        <div class="card-text">
+                            @place.Description
+                        </div>
+                        <div>
+                            <div>@cityNames.GetValueOrDefault(place.CityId, "Unknown City")</div>
+                        </div>
+
+
+
+
+
+                        <EditPlaceBtn Id="place.Id" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    IEnumerable<PlaceFamous>? places = null;
+    Dictionary<Guid, string> cityNames = new Dictionary<Guid, string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        places = await PlaceService.GetAllAsync();
+        var cities = await CityService.GetAllCity();
+        cityNames = cities.ToDictionary(city => city.Id, city => city.Name);
+    }
+}

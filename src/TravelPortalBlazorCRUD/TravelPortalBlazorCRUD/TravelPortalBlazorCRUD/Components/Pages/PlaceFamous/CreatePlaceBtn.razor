@@ -1,0 +1,12 @@
+﻿@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+
+<button @onclick="AddPlace" class="btn btn-primary"> Add New Place </button>
+@code {
+    void AddPlace()
+    {
+        NavigationManager.NavigateTo("/edit-place");
+
+    }
+}

@@ -1,33 +1,33 @@
-﻿@page "/edit-hotel"
-@page "/edit-hotel/{id:guid}"
+﻿@page "/edit-place"
+@page "/edit-place/{id:guid}"
 
 @inject NavigationManager Navigation
 @inject ICityService CityService
-@inject IHotelService HotelService
+@inject IPlaceFamousService PlaceService
+
 
 @rendermode InteractiveAuto
 
 @if (Id == null)
 {
-    <h3>Додати новий готель</h3>
+    <h3>Додати новий місце</h3>
 }
 else
 {
-    <h3>Редагувати @hotel.name</h3>
+    <h3>Редагувати @place.Name</h3>
 }
 
-<EditForm Model="hotel" OnSubmit="HandleSubmit" FormName="hotelForm">
+<EditForm Model="place" OnSubmit="HandleSubmit" FormName="placeForm">
     <label>Назва</label>
-    <InputText @bind-Value="hotel.name" class="form-control" required />
+    <InputText @bind-Value="place.Name" class="form-control" required />
 
     <label>Рейтинг</label>
-    <InputNumber @bind-Value="hotel.rating" class="form-control" min="0" max="5" step="0.1" required />
+    <InputTextArea @bind-Value="place.Description" class="form-control"required />
 
     <label>Фото</label>
     <InputFile OnChange="HandleFileSelected" class="form-control" />
-
     <label>Місто</label>
-    <InputSelect @bind-Value="hotel.CityId" class="form-control">
+    <InputSelect @bind-Value="place.CityId" class="form-control">
         <option>select city</option>
         @foreach (var city in cities)
         {
@@ -37,7 +37,7 @@ else
     <button type="submit" class="btn btn-primary">Відправити</button>
     @if (Id != null)
     {
-        <button @onclick="DeleteHotel" type="button" class="btn btn-danger">Видалити</button>
+        <button @onclick="DeletePlace" type="button" class="btn btn-danger">Видалити</button>
     }
 </EditForm>
 
@@ -45,7 +45,7 @@ else
     [Parameter]
     public Guid? Id { get; set; }
 
-    Hotel hotel { get; set; } = new Hotel();
+    PlaceFamous place { get; set; } = new PlaceFamous();
     private List<City> cities = new List<City>();
 
     protected override async Task OnInitializedAsync()
@@ -53,10 +53,10 @@ else
         await LoadCities();
         if (Id != null)
         {
-            hotel = await HotelService.GetByIdAsync((Guid)Id);
-            if (hotel == null)
+            place = await PlaceService.GetByIdAsync((Guid)Id);
+            if (place == null)
             {
-                Navigation.NavigateTo("hotels");
+                Navigation.NavigateTo("placefamous");
             }
         }
     }
@@ -68,24 +68,24 @@ else
 
     async Task HandleSubmit()
     {
-            if (Id == null)
-            {
-                await HotelService.CreateAsync(hotel);
-            }
-            else
-            {
-                await HotelService.UpdateAsync((Guid)Id, hotel);
-            }
-            Navigation.NavigateTo("hotels");
+        if (Id == null)
+        {
+            await PlaceService.CreateAsync(place);
+        }
+        else
+        {
+            await PlaceService.UpdateAsync((Guid)Id, place);
+        }
+        Navigation.NavigateTo("placefamous");
     }
 
-    async Task DeleteHotel()
+    async Task DeletePlace()
     {
-            if (Id != null)
-            {
-                await HotelService.DeleteAsync((Guid)Id);
-                Navigation.NavigateTo("hotels");
-            }
+        if (Id != null)
+        {
+            await PlaceService.DeleteAsync((Guid)Id);
+            Navigation.NavigateTo("placefamous");
+        }
     }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
@@ -96,7 +96,7 @@ else
             using var stream = file.OpenReadStream();
             using var ms = new MemoryStream();
             await stream.CopyToAsync(ms);
-            hotel.Photo = ms.ToArray();
+            place.Photo = ms.ToArray();
         }
     }
 }

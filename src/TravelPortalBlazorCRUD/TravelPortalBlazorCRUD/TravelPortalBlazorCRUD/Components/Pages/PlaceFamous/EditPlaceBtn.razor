@@ -1,0 +1,14 @@
+﻿@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+
+<button @onclick="EditPlace" class="btn btn-primary"> Edit Place </button>
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    void EditPlace()
+    {
+        NavigationManager.NavigateTo($"/edit-place/{Id}");
+    }
+}

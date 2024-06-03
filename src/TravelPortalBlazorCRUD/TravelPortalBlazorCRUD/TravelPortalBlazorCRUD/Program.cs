@@ -4,6 +4,7 @@ using TravelPortalBlazor.Core.Context;
 using TravelPortalBlazor.Service.Services.CityService;
 using TravelPortalBlazor.Service.Services.HotelService;
 using TravelPortalBlazor.Service.Services;
+using TravelPortalBlazor.Service.Services.PlaceFamousService;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,6 +24,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectConnectio
 
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
+builder.Services.AddScoped <IPlaceFamousService, PlaceFamousService>();
+
 
 var app = builder.Build();
 
